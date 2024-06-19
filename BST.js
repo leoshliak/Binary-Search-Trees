@@ -20,7 +20,65 @@ class Tree {
       return root;
   }
 
+  insert(value) {
+    const newNode = new Node(value);
+    if (this.root === null) {
+        this.root = newNode;
+        return;
+    }
+
+    let current = this.root;
+    while (true) {
+        if (value < current.data) {
+            if (current.left === null) {
+                current.left = newNode;
+                return;
+            } else {
+                current = current.left;
+            }
+        } else if (value > current.data) {
+            if (current.right === null) {
+                current.right = newNode;
+                return;
+            } else {
+                current = current.right;
+            }
+        } else {
+            return 'already exists';
+        }
+    }
 }
+
+deleteItem(value, root = this.root) {
+  if (root === null) return root;
+
+  if (value < root.data) {
+      root.left = this.deleteItem(value, root.left);
+  } else if (value > root.data) {
+      root.right = this.deleteItem(value, root.right);
+  } else {
+      if (root.left === null) {
+          return root.right;
+      } else if (root.right === null) {
+          return root.left;
+      }
+
+      root.data = this.minValue(root.right);
+      root.right = this.deleteItem(root.data, root.right);
+  }
+
+  return root;
+}
+
+minValue(root) {
+  while (root.left !== null) {
+      root = root.left;
+  }
+  return root.data;
+}
+
+
+};
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
