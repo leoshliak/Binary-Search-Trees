@@ -77,6 +77,38 @@ minValue(root) {
   return root.data;
 }
 
+find(value) {
+    let current = this.root;
+    while (current !== null) {
+        if (value < current.data) {
+            current = current.left;
+        } else if (value > current.data) {
+            current = current.right;
+        } else {
+            return current;
+        }
+    }
+    return null; 
+
+}
+
+levelOrder(callback) {
+    if(this.root == null) return;
+
+    const queue = [this.root];
+    const result = [];
+    while (queue.length > 0) {
+        const currentNode = queue.shift();
+        if (callback) {
+            callback(currentNode);
+        } else {
+            result.push(currentNode.data);
+        }
+        if (currentNode.left) queue.push(currentNode.left);
+        if (currentNode.right) queue.push(currentNode.right);
+    }
+    if (!callback) return result;
+}
 
 };
 
