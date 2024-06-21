@@ -110,6 +110,52 @@ levelOrder(callback) {
     if (!callback) return result;
 }
 
+
+inOrder(callback, node = this.root, result = []) {
+    if (node == null) return;
+
+        this.inOrder(callback, node.left, result);
+        if (callback) {
+            callback(node);
+        } else {
+            result.push(node.data);
+        }
+        this.inOrder(callback, node.right, result);
+    
+        if (callback) return undefined 
+        else return result;
+}
+
+preOrder(callback, node = this.root, result = []) {
+    if (node == null) return;
+
+    if (callback) {
+        callback(node);
+    } else {
+        result.push(node.data);
+    }
+    this.preOrder(callback, node.left, result);
+    this.preOrder(callback, node.right, result);
+
+    if (callback) return undefined 
+     else return result;
+}
+
+postOrder(callback, node = this.root, result = []) {
+    if (node == null) return;
+
+    this.postOrder(callback, node.left, result);
+    this.postOrder(callback, node.right, result);
+    if (callback) {
+        callback(node);
+    } else {
+        result.push(node.data);
+    }
+
+    if (callback) return undefined 
+     else return result;
+}
+
 };
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
